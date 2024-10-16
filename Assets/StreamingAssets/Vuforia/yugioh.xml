@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QCARConfig>
+  <Tracking>
+    <ImageTarget name="stadium" size="0.100000 0.136986" />
+    <ImageTarget name="dark-magician" size="0.100000 0.139714" />
+    <ImageTarget name="dark-magician-girl" size="0.100000 0.139714" />
+    <ImageTarget name="winged-kuriboh" size="0.100000 0.145843" />
+    <ImageTarget name="sparkman" size="0.100000 0.145756" />
+    <ImageTarget name="neos" size="0.100000 0.145756" />
+    <ImageTarget name="gyroid" size="0.100000 0.145756" />
+    <ImageTarget name="flame-wingman" size="0.100000 0.145756" />
+    <ImageTarget name="avian" size="0.100000 0.145756" />
+    <ImageTarget name="burstinatrix" size="0.100000 0.145161" />
+  </Tracking>
+</QCARConfig>
