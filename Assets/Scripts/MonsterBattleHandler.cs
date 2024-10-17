@@ -1,28 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Vuforia; // Necess·rio para usar Vuforia e ObserverBehaviour
+using Vuforia;
 
 public class MonsterBattleHandler : MonoBehaviour
 {
-    // Lista de todos os monstros detectados
     private List<Monster> detectedMonsters = new List<Monster>();
+    private bool battleHappened = false; // Controle para evitar m√∫ltiplas batalhas
 
     void Start()
     {
         Debug.Log("Startou!");
 
-        // ObtÈm todos os image targets na cena
+        // Obt√©m todos os image targets na cena
         ObserverBehaviour[] observers = FindObjectsOfType<ObserverBehaviour>();
 
-        // Inscreve-se nos eventos de detecÁ„o de cada target
+        // Inscreve-se nos eventos de detec√ß√£o de cada target
         foreach (var observer in observers)
         {
             observer.OnTargetStatusChanged += OnTargetStatusChanged;
         }
     }
 
-    // FunÁ„o chamada quando o status de qualquer image target muda
     private void OnTargetStatusChanged(ObserverBehaviour target, TargetStatus status)
     {
         // Verifica se o target foi detectado
@@ -35,14 +34,36 @@ public class MonsterBattleHandler : MonoBehaviour
             RemoveMonster(target);
         }
 
-        // Verifica se dois monstros foram detectados
-        if (detectedMonsters.Count == 2)
+        // Se dois monstros forem detectados e a batalha ainda n√£o ocorreu, inicia a corrotina para aguardar o estado "Idle"
+        if (detectedMonsters.Count == 2 && !battleHappened)
         {
-            CompareMonsters();
+            StartCoroutine(WaitForBothMonstersToBeIdle());
         }
     }
 
-    // FunÁ„o para adicionar um monstro ‡ lista quando o target È detectado
+    // Coroutine que espera os dois monstros estarem em "Idle" antes de come√ßar a batalha
+    private IEnumerator WaitForBothMonstersToBeIdle()
+    {
+        Debug.Log("Esperando os dois monstros ficarem em Idle...");
+
+        // Espera at√© que ambos os monstros estejam no estado "Idle"
+        while (!BothMonstersIdle())
+        {
+            yield return null; // Aguarda o pr√≥ximo frame
+        }
+
+        Debug.Log("Os dois monstros est√£o em Idle, iniciando a batalha.");
+        CompareMonsters();
+        battleHappened = true; // Marca a batalha como realizada
+    }
+
+    private bool BothMonstersIdle()
+    {
+        var bothAreIdle = detectedMonsters[0].IsIdle() && detectedMonsters[1].IsIdle();
+        Debug.Log("Ambos Idle: " + bothAreIdle);
+        return bothAreIdle;
+    }
+
     private void AddMonster(ObserverBehaviour target)
     {
         Monster monster = target.GetComponentInChildren<Monster>();
@@ -53,7 +74,6 @@ public class MonsterBattleHandler : MonoBehaviour
         }
     }
 
-    // FunÁ„o para remover um monstro da lista quando o target È perdido
     private void RemoveMonster(ObserverBehaviour target)
     {
         Monster monster = target.GetComponentInChildren<Monster>();
@@ -61,10 +81,10 @@ public class MonsterBattleHandler : MonoBehaviour
         {
             detectedMonsters.Remove(monster);
             Debug.Log("Monstro perdido: " + monster.name);
+            battleHappened = false; // Reseta o controle da batalha
         }
     }
 
-    // FunÁ„o para comparar os monstros e iniciar a lÛgica de ataque
     private void CompareMonsters()
     {
         Monster monster1 = detectedMonsters[0];
@@ -72,17 +92,19 @@ public class MonsterBattleHandler : MonoBehaviour
 
         if (monster1.attackValue > monster2.attackValue)
         {
-            monster1.Attack();
+            Debug.Log("1 atacou 2");
+            monster1.Attack(monster2); // Passando o oponente correto
             monster2.Guard();
         }
         else if (monster1.attackValue < monster2.attackValue)
         {
+            Debug.Log("2 atacou 1");
             monster1.Guard();
-            monster2.Attack();
+            monster2.Attack(monster1); // Passando o oponente correto
         }
         else
         {
-            Debug.Log("Ambos os monstros tÍm o mesmo valor de ataque.");
+            Debug.Log("Ambos os monstros t√™m o mesmo valor de ataque.");
         }
     }
 }

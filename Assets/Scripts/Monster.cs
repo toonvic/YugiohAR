@@ -1,30 +1,85 @@
+using System.Collections;
 using UnityEngine;
 
 public class Monster : MonoBehaviour
 {
-    // Valor de ataque fixo do monstro
     public int attackValue;
-
-    // ReferÍncia ao Animator do monstro
     private Animator modelAnimator;
+
+    // Definindo os nomes dos estados do Animator
+    private string idleStateName = "Idle";
+    private string attackStateName = "Attack";
+    private string guardStateName = "Guard";
+
+    private bool isAttacking = false;
+    private bool isGuarding = false;
 
     void Start()
     {
-        // ObtÈm o Animator do monstro
         modelAnimator = GetComponent<Animator>();
     }
 
-    // MÈtodo que executa a animaÁ„o de ataque
-    public void Attack()
+    // Verifica se o monstro est√° no estado "idle"
+    public bool IsIdle()
     {
-        modelAnimator.SetTrigger("Attack");
-        Debug.Log(gameObject.name + " est· atacando!");
+        AnimatorStateInfo currentState = modelAnimator.GetCurrentAnimatorStateInfo(0);
+        return currentState.IsName(idleStateName);
     }
 
-    // MÈtodo que executa a animaÁ„o de guarda
+    // Ataca e sincroniza o tempo do ataque com a defesa do oponente
+    public void Attack(Monster opponent)
+    {
+        if (IsIdle() && !isAttacking)
+        {
+            isAttacking = true;
+            modelAnimator.SetTrigger("Attack");
+            Debug.Log(gameObject.name + " est√° atacando!");
+
+            // Aguarda o fim da anima√ß√£o de ataque e ent√£o reseta o estado
+            StartCoroutine(EndAttack(opponent));
+        }
+    }
+
+    // Defende at√© que o oponente termine de atacar
     public void Guard()
     {
-        modelAnimator.SetTrigger("Guard");
-        Debug.Log(gameObject.name + " est· defendendo!");
+        if (IsIdle() && !isGuarding)
+        {
+            isGuarding = true;
+            modelAnimator.SetTrigger("Guard");
+            Debug.Log(gameObject.name + " est√° defendendo!");
+        }
+    }
+
+    // Coroutine para controlar o t√©rmino do ataque
+    private IEnumerator EndAttack(Monster opponent)
+    {
+        // Espera at√© o final da anima√ß√£o de ataque
+        AnimatorStateInfo attackStateInfo = modelAnimator.GetCurrentAnimatorStateInfo(0);
+        yield return new WaitForSeconds(attackStateInfo.length);
+
+        isAttacking = false;
+        opponent.EndGuard(); // Oponente sai da defesa
+
+        Debug.Log(gameObject.name + " terminou o ataque e est√° voltando ao estado idle.");
+        ResetToIdle();
+    }
+
+    // Fun√ß√£o chamada pelo oponente quando o ataque termina
+    public void EndGuard()
+    {
+        if (isGuarding)
+        {
+            isGuarding = false;
+            Debug.Log(gameObject.name + " terminou a defesa e est√° voltando ao estado idle.");
+            ResetToIdle();
+        }
+    }
+
+    // Reseta o monstro para o estado "idle"
+    public void ResetToIdle()
+    {
+        isAttacking = false;
+        isGuarding = false;
     }
 }
