@@ -7,23 +7,25 @@ using Vuforia;
 public class MonsterBattleHandler : MonoBehaviour
 {
     private List<Monster> detectedMonsters = new List<Monster>();
-    private bool battleHappened = false; // Controle para evitar múltiplas batalhas
+    private bool battleHappened = false;
 
-    // Variáveis de vida dos jogadores
     public int player1Life = 4000;
     public int player2Life = 4000;
 
     public Text player1LifeText;
     public Text player2LifeText;
 
+    public SpriteSwitcher PlayerOneProfile;
+    public SpriteSwitcher PlayerTwoProfile;
+
+    public Canvas gameOverCanvas;
+
+    private bool gameEnded;
+
     void Start()
     {
-        Debug.Log("Startou!");
-
-        // Obtém todos os image targets na cena
         ObserverBehaviour[] observers = FindObjectsOfType<ObserverBehaviour>();
 
-        // Inscreve-se nos eventos de detecção de cada target
         foreach (var observer in observers)
         {
             observer.OnTargetStatusChanged += OnTargetStatusChanged;
@@ -34,13 +36,17 @@ public class MonsterBattleHandler : MonoBehaviour
 
     private void UpdateLifeUI()
     {
-        player1LifeText.text = "Player 1 Life: " + player1Life;
-        player2LifeText.text = "Player 2 Life: " + player2Life;
+        player1LifeText.text = player1Life.ToString();
+        player2LifeText.text = player2Life.ToString();
     }
 
     private void OnTargetStatusChanged(ObserverBehaviour target, TargetStatus status)
     {
-        // Verifica se o target foi detectado
+        if (gameEnded)
+        {
+            return;
+        }
+
         if (status.Status == Status.TRACKED || status.Status == Status.EXTENDED_TRACKED)
         {
             AddMonster(target);
@@ -50,34 +56,26 @@ public class MonsterBattleHandler : MonoBehaviour
             RemoveMonster(target);
         }
 
-        // Se dois monstros forem detectados e a batalha ainda não ocorreu, inicia a corrotina para aguardar o estado "Idle"
         if (detectedMonsters.Count == 2 && !battleHappened)
         {
             StartCoroutine(WaitForBothMonstersToBeIdle());
         }
     }
 
-    // Coroutine que espera os dois monstros estarem em "Idle" antes de começar a batalha
     private IEnumerator WaitForBothMonstersToBeIdle()
     {
-        Debug.Log("Esperando os dois monstros ficarem em Idle...");
-
-        // Espera até que ambos os monstros estejam no estado "Idle"
         while (!BothMonstersIdle())
         {
-            yield return null; // Aguarda o próximo frame
+            yield return null;
         }
 
-        Debug.Log("Os dois monstros estão em Idle, iniciando a batalha.");
         CompareMonsters();
-        battleHappened = true; // Marca a batalha como realizada
+        battleHappened = true;
     }
 
     private bool BothMonstersIdle()
     {
-        var bothAreIdle = detectedMonsters[0].IsIdle() && detectedMonsters[1].IsIdle();
-        Debug.Log("Ambos Idle: " + bothAreIdle);
-        return bothAreIdle;
+        return detectedMonsters[0].IsIdle() && detectedMonsters[1].IsIdle();
     }
 
     private void AddMonster(ObserverBehaviour target)
@@ -86,7 +84,7 @@ public class MonsterBattleHandler : MonoBehaviour
         if (monster != null && !detectedMonsters.Contains(monster))
         {
             detectedMonsters.Add(monster);
-            Debug.Log("Monstro detectado: " + monster.name);
+            monster.DoTypeSound();
         }
     }
 
@@ -95,9 +93,10 @@ public class MonsterBattleHandler : MonoBehaviour
         Monster monster = target.GetComponentInChildren<Monster>();
         if (monster != null && detectedMonsters.Contains(monster))
         {
+            monster.RestoreInitialScale();
+
             detectedMonsters.Remove(monster);
-            Debug.Log("Monstro perdido: " + monster.name);
-            battleHappened = false; // Reseta o controle da batalha
+            battleHappened = false;
         }
     }
 
@@ -111,57 +110,112 @@ public class MonsterBattleHandler : MonoBehaviour
 
         if (monster1.attackValue > monster2.attackValue)
         {
-            Debug.Log("1 atacou 2");
-            monster1.Attack(monster2);
-            monster2.Guard();
-
-            var damage = monster1.attackValue - monster2.attackValue;
-
-            // Desconta dos pontos de vida do jogador do lado onde o segundo monstro está
-            if (isMonster2OnLeft)
-            {
-                player1Life -= damage;
-                Debug.Log("Player 1 atingido! Vida restante: " + player1Life);
-            }
-            else
-            {
-                player2Life -= damage;
-                Debug.Log("Player 2 atingido! Vida restante: " + player2Life);
-            }
+            StartCoroutine(HandleBattleSequence(monster1, monster2, isMonster2OnLeft));
         }
         else if (monster1.attackValue < monster2.attackValue)
         {
-            Debug.Log("2 atacou 1");
-            monster1.Guard();
-            monster2.Attack(monster1);
-
-            var damage = monster2.attackValue - monster1.attackValue;
-
-            // Desconta dos pontos de vida do jogador do lado onde o primeiro monstro está
-            if (isMonster1OnLeft)
-            {
-                player1Life -= damage;
-                Debug.Log("Player 1 atingido! Vida restante: " + player1Life);
-            }
-            else
-            {
-                player2Life -= damage;
-                Debug.Log("Player 2 atingido! Vida restante: " + player2Life);
-            }
+            StartCoroutine(HandleBattleSequence(monster2, monster1, isMonster1OnLeft));
         }
         else
         {
-            Debug.Log("Ambos os monstros têm o mesmo valor de ataque.");
+            Debug.Log("Empate!");
         }
-
-        UpdateLifeUI();
     }
 
-    // Função para verificar se o monstro está no lado esquerdo ou direito da tela
+    private IEnumerator HandleBattleSequence(Monster attacker, Monster defender, bool isDefenderOnLeft)
+    {
+        attacker.Attack(defender);
+        defender.Guard();
+
+        int damage = attacker.attackValue - defender.attackValue;
+        if (isDefenderOnLeft)
+        {
+            player1Life -= damage;
+            PlayerOneProfile.SwitchSprite(2);
+            PlayerTwoProfile.SwitchSprite(3);
+        }
+        else
+        {
+            player2Life -= damage;
+            PlayerOneProfile.SwitchSprite(3);
+            PlayerTwoProfile.SwitchSprite(2);
+        }
+
+        yield return new WaitUntil(() => !attacker.IsAttacking() && !attacker.IsAttackingProperty());
+
+        defender.EndGuard();
+
+        yield return new WaitUntil(() => !defender.IsDefending());
+
+        PlayerOneProfile.SwitchSprite(1);
+        PlayerTwoProfile.SwitchSprite(1);
+
+        yield return StartCoroutine(ApplyPopoutEffect(attacker, defender, 0.5f));
+
+        UpdateLifeUI();
+
+        CheckGameOver();
+    }
+
+    private IEnumerator ApplyPopoutEffect(Monster attacker, Monster defender, float duration)
+    {
+        float elapsedTime = 0f;
+
+        // Escala final (zero)
+        Vector3 targetScale = Vector3.zero;
+
+        // Aplica o efeito de popout
+        while (elapsedTime < duration)
+        {
+            attacker.transform.localScale = Vector3.Lerp(attacker.GetInitialScale(), targetScale, elapsedTime / duration);
+            defender.transform.localScale = Vector3.Lerp(defender.GetInitialScale(), targetScale, elapsedTime / duration);
+
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        // Garante que ambos atinjam a escala final
+        attacker.transform.localScale = targetScale;
+        defender.transform.localScale = targetScale;
+
+        Debug.Log("Popout Effect concluído.");
+    }
+
+
+    private void CheckGameOver()
+    {
+        if (player1Life <= 0)
+        {
+            EndGame("Player 2 venceu!");
+
+            PlayerOneProfile.SwitchSprite(2);
+            PlayerTwoProfile.SwitchSprite(1);
+        }
+        else if (player2Life <= 0)
+        {
+            EndGame("Player 1 venceu!");
+
+            PlayerOneProfile.SwitchSprite(1);
+            PlayerTwoProfile.SwitchSprite(2);
+        }
+    }
+
+    private void EndGame(string message)
+    {
+        gameOverCanvas.gameObject.SetActive(true);
+
+        Text gameOverText = gameOverCanvas.GetComponentInChildren<Text>();
+        if (gameOverText != null)
+        {
+            gameOverText.text = message;
+        }
+
+        gameEnded = true;
+    }
+
     private bool IsMonsterOnLeft(Transform monsterTransform)
     {
         Vector3 screenPos = Camera.main.WorldToScreenPoint(monsterTransform.position);
-        float middleScreen = Screen.width / 2;
-        return screenPos.x < middleScreen;
+        return screenPos.x < Screen.width / 2;
     }
 }

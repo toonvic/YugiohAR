@@ -6,80 +6,114 @@ public class Monster : MonoBehaviour
     public int attackValue;
     private Animator modelAnimator;
 
-    // Definindo os nomes dos estados do Animator
+    // Nomes dos estados no Animator
     private string idleStateName = "Idle";
     private string attackStateName = "Attack";
     private string guardStateName = "Guard";
 
     private bool isAttacking = false;
-    private bool isGuarding = false;
+    private bool isDefending = false;
+
+    public AudioSourceManager audioManager;
+
+    private Vector3 initialScale; // Escala original do monstro
 
     void Start()
     {
         modelAnimator = GetComponent<Animator>();
+        initialScale = transform.localScale;
     }
 
-    // Verifica se o monstro está no estado "idle"
+    // Verifica se o monstro está no estado "Idle"
     public bool IsIdle()
     {
         AnimatorStateInfo currentState = modelAnimator.GetCurrentAnimatorStateInfo(0);
         return currentState.IsName(idleStateName);
     }
 
-    // Ataca e sincroniza o tempo do ataque com a defesa do oponente
+    // Verifica se o monstro está no estado de ataque
+    public bool IsAttacking()
+    {
+        AnimatorStateInfo currentState = modelAnimator.GetCurrentAnimatorStateInfo(0);
+        return currentState.IsName(attackStateName);
+    }
+
+    public bool IsAttackingProperty()
+    {
+        return isAttacking;
+    }
+
+    // Verifica se o monstro está no estado de defesa
+    public bool IsDefending()
+    {
+        AnimatorStateInfo currentState = modelAnimator.GetCurrentAnimatorStateInfo(0);
+        return currentState.IsName(guardStateName);
+    }
+
+    // Inicia o ataque
     public void Attack(Monster opponent)
     {
         if (IsIdle() && !isAttacking)
         {
             isAttacking = true;
             modelAnimator.SetTrigger("Attack");
-            Debug.Log(gameObject.name + " está atacando!");
-
-            // Aguarda o fim da animação de ataque e então reseta o estado
-            StartCoroutine(EndAttack(opponent));
+            Debug.Log($"{gameObject.name} está atacando!");
+            StartCoroutine(EndAttack());
         }
     }
 
-    // Defende até que o oponente termine de atacar
+    // Inicia a defesa
     public void Guard()
     {
-        if (IsIdle() && !isGuarding)
+        if (IsIdle() && !isDefending)
         {
-            isGuarding = true;
+            isDefending = true;
             modelAnimator.SetTrigger("Guard");
-            Debug.Log(gameObject.name + " está defendendo!");
+            Debug.Log($"{gameObject.name} está defendendo!");
         }
     }
 
-    // Coroutine para controlar o término do ataque
-    private IEnumerator EndAttack(Monster opponent)
+    // Finaliza o estado de ataque após a animação
+    private IEnumerator EndAttack()
     {
-        // Espera até o final da animação de ataque
-        AnimatorStateInfo attackStateInfo = modelAnimator.GetCurrentAnimatorStateInfo(0);
-        yield return new WaitForSeconds(attackStateInfo.length);
-
+        yield return new WaitUntil(() => IsAttacking());
+        yield return new WaitUntil(() => !IsAttacking());
         isAttacking = false;
-        opponent.EndGuard(); // Oponente sai da defesa
-
-        Debug.Log(gameObject.name + " terminou o ataque e está voltando ao estado idle.");
-        ResetToIdle();
+        Debug.Log($"{gameObject.name} terminou o ataque.");
     }
 
-    // Função chamada pelo oponente quando o ataque termina
+    // Finaliza a defesa
     public void EndGuard()
     {
-        if (isGuarding)
+        if (isDefending)
         {
-            isGuarding = false;
-            Debug.Log(gameObject.name + " terminou a defesa e está voltando ao estado idle.");
-            ResetToIdle();
+            isDefending = false;
+            Debug.Log($"{gameObject.name} terminou a defesa.");
         }
     }
 
-    // Reseta o monstro para o estado "idle"
-    public void ResetToIdle()
+    // Função chamada ao detectar o tipo do monstro (apenas um exemplo de som, pode ser expandido)
+    public void DoTypeSound()
     {
-        isAttacking = false;
-        isGuarding = false;
+        if (audioManager != null)
+            audioManager.PlayAudio(0);
+    }
+
+    public void SaveInitialScale()
+    {
+        initialScale = transform.localScale;
+    }
+
+    // Obtém a escala inicial
+    public Vector3 GetInitialScale()
+    {
+        return initialScale;
+    }
+
+    // Restaura a escala inicial
+    public void RestoreInitialScale()
+    {
+        Debug.Log(initialScale);
+        transform.localScale = initialScale;
     }
 }
