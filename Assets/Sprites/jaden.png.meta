@@ -1,0 +1,444 @@
+fileFormatVersion: 2
+guid: 503f7f72e95e88c458887cdda28a7566
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Game Boy Advance - Yu-Gi-Oh GX Duel Academy - Jaden Yuki_1
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 268
+        width: 77
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7641970cdde9c6546a287764d05ea031
+      internalID: 1331914469
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Yu-Gi-Oh GX Duel Academy - Jaden Yuki_0
+      rect:
+        serializedVersion: 2
+        x: 47
+        y: 268
+        width: 77
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d62accda46e2764693036face0b6cd2
+      internalID: -23694317
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Yu-Gi-Oh GX Duel Academy - Jaden Yuki_2
+      rect:
+        serializedVersion: 2
+        x: 214
+        y: 268
+        width: 77
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b40fd989c83ff740be9dbf122d3be0d
+      internalID: -729436087
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Yu-Gi-Oh GX Duel Academy - Jaden Yuki_3
+      rect:
+        serializedVersion: 2
+        x: 297
+        y: 268
+        width: 83
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a578ab1f33e43604584d471e97fb7858
+      internalID: 1277603953
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Yu-Gi-Oh GX Duel Academy - Jaden Yuki_4
+      rect:
+        serializedVersion: 2
+        x: 387
+        y: 268
+        width: 83
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 52fe96c9d44edbe4abcd39ce6366e40c
+      internalID: 498264568
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Yu-Gi-Oh GX Duel Academy - Jaden Yuki_5
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 194
+        width: 77
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ad6130e8aba0e3489b2dd9d467d7bf6
+      internalID: 1806509417
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Yu-Gi-Oh GX Duel Academy - Jaden Yuki_6
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 194
+        width: 77
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6cf99f88ed6cc414893c426db43ab7cb
+      internalID: 1182972451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Yu-Gi-Oh GX Duel Academy - Jaden Yuki_7
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 194
+        width: 77
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a5388e9e15a1864eb24041a2618ba9b
+      internalID: 571751168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Yu-Gi-Oh GX Duel Academy - Jaden Yuki_8
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 194
+        width: 77
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7aeb22a1e15cb84bab4aba7969117a4
+      internalID: -655133051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Yu-Gi-Oh GX Duel Academy - Jaden Yuki_9
+      rect:
+        serializedVersion: 2
+        x: 347
+        y: 194
+        width: 77
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba7c60f71e7cdc9409ebfabc5c453931
+      internalID: -738383765
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Yu-Gi-Oh GX Duel Academy - Jaden Yuki_10
+      rect:
+        serializedVersion: 2
+        x: 430
+        y: 194
+        width: 77
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 72b775b3d5c79b64a8a1af6e989f04da
+      internalID: 1841145757
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Yu-Gi-Oh GX Duel Academy - Jaden Yuki_11
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 116
+        width: 162
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18503461af303b545a2de4c786fdc998
+      internalID: -587850818
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Yu-Gi-Oh GX Duel Academy - Jaden Yuki_12
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 116
+        width: 162
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f6bf2e12fb09fe45904ac9951517fa4
+      internalID: -1648484109
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Yu-Gi-Oh GX Duel Academy - Jaden Yuki_13
+      rect:
+        serializedVersion: 2
+        x: 342
+        y: 116
+        width: 162
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f65c380f5abfe9a4c8c509eb8c8c4fac
+      internalID: 1777724306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Boy Advance - Yu-Gi-Oh GX Duel Academy - Jaden Yuki_14
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 2
+        width: 217
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed67a967a50b07a4c99c743b59c080bd
+      internalID: 1337936037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: cc469920929bea040835ca23c96347d0
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Game Boy Advance - Yu-Gi-Oh GX Duel Academy - Jaden Yuki_0: -23694317
+      Game Boy Advance - Yu-Gi-Oh GX Duel Academy - Jaden Yuki_1: 1331914469
+      Game Boy Advance - Yu-Gi-Oh GX Duel Academy - Jaden Yuki_10: 1841145757
+      Game Boy Advance - Yu-Gi-Oh GX Duel Academy - Jaden Yuki_11: -587850818
+      Game Boy Advance - Yu-Gi-Oh GX Duel Academy - Jaden Yuki_12: -1648484109
+      Game Boy Advance - Yu-Gi-Oh GX Duel Academy - Jaden Yuki_13: 1777724306
+      Game Boy Advance - Yu-Gi-Oh GX Duel Academy - Jaden Yuki_14: 1337936037
+      Game Boy Advance - Yu-Gi-Oh GX Duel Academy - Jaden Yuki_2: -729436087
+      Game Boy Advance - Yu-Gi-Oh GX Duel Academy - Jaden Yuki_3: 1277603953
+      Game Boy Advance - Yu-Gi-Oh GX Duel Academy - Jaden Yuki_4: 498264568
+      Game Boy Advance - Yu-Gi-Oh GX Duel Academy - Jaden Yuki_5: 1806509417
+      Game Boy Advance - Yu-Gi-Oh GX Duel Academy - Jaden Yuki_6: 1182972451
+      Game Boy Advance - Yu-Gi-Oh GX Duel Academy - Jaden Yuki_7: 571751168
+      Game Boy Advance - Yu-Gi-Oh GX Duel Academy - Jaden Yuki_8: -655133051
+      Game Boy Advance - Yu-Gi-Oh GX Duel Academy - Jaden Yuki_9: -738383765
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
