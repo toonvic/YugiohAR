@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class TutorialController : MonoBehaviour
 {
-    public GameObject[] tutorialPanels; 
+    public GameObject[] tutorialPanels;
     private int currentPanelIndex = 0;
 
     public Button nextButton;
@@ -45,7 +45,8 @@ public class TutorialController : MonoBehaviour
             tutorialPanels[i].SetActive(i == currentPanelIndex);
         }
 
-        nextButton.interactable = currentPanelIndex < tutorialPanels.Length - 1;
-        previousButton.interactable = currentPanelIndex > 0;
+        // Configura a visibilidade dos botões
+        nextButton.gameObject.SetActive(currentPanelIndex < tutorialPanels.Length - 1);
+        previousButton.gameObject.SetActive(currentPanelIndex > 0);
     }
 }

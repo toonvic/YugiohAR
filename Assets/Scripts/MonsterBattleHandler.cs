@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Vuforia;
+using UnityEngine.SceneManagement; // Import necessário para carregar cenas
 
 public class MonsterBattleHandler : MonoBehaviour
 {
@@ -32,6 +33,15 @@ public class MonsterBattleHandler : MonoBehaviour
         }
 
         UpdateLifeUI();
+    }
+
+    void Update()
+    {
+        // Verifica se o jogo acabou e se a tecla Espaço foi pressionada
+        if (gameEnded && Input.GetKeyDown(KeyCode.Space))
+        {
+            SceneManager.LoadScene("MainMenu"); // Carrega o menu principal
+        }
     }
 
     private void UpdateLifeUI()
@@ -118,8 +128,13 @@ public class MonsterBattleHandler : MonoBehaviour
         }
         else
         {
-            Debug.Log("Empate!");
+            Tie(monster1, monster2);
         }
+    }
+
+    private IEnumerator Tie(Monster monster1, Monster monster2)
+    {
+        yield return StartCoroutine(ApplyPopoutEffect(monster1, monster2, 0.5f));
     }
 
     private IEnumerator HandleBattleSequence(Monster attacker, Monster defender, bool isDefenderOnLeft)
@@ -180,7 +195,6 @@ public class MonsterBattleHandler : MonoBehaviour
 
         Debug.Log("Popout Effect concluído.");
     }
-
 
     private void CheckGameOver()
     {

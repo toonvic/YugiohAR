@@ -1870,7 +1870,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f7ad5ab10c31aa4f9b267765d12e3ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackValue: 4000
+  attackValue: 1600
   audioManager: {fileID: 1040706394}
 --- !u!114 &1040706394
 MonoBehaviour:
